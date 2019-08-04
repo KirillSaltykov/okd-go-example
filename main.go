@@ -15,8 +15,14 @@ func HealthHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(map[string]string{"status": "OK"})
 }
 
+func VersionHandler(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(map[string]string{"version": "v0.1.0"})
+}
+
 func main() {
 	r := mux.NewRouter()
+	r.HandleFunc("/", VersionHandler)
 	r.HandleFunc("/health", HealthHandler)
 
 	srv := &http.Server{
